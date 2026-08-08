@@ -16,6 +16,7 @@ import {
   formatThermalItemLeftText,
   formatThermalItemTotal,
 } from "@/lib/thermal-pos-format";
+import { thermalPdfPageSize } from "@/lib/pdf-page-size";
 
 const styles = StyleSheet.create({
   page: {
@@ -106,7 +107,7 @@ export function ThermalPosPDF({ data }: ThermalPosPDFProps) {
 
   return (
     <Document>
-      <Page size={{ width: 226, height: 841 }} style={styles.page} wrap>
+      <Page size={thermalPdfPageSize} style={styles.page} wrap={false}>
         <Text style={styles.headerTitle}>
           {(data.companyName || "IDEAL").toUpperCase()}
         </Text>

@@ -20,7 +20,7 @@ interface InvoicePreviewProps {
 export const InvoicePreview = forwardRef<HTMLDivElement, InvoicePreviewProps>(
   ({ data, template }, ref) => {
     return (
-      <div ref={ref} id="invoice-preview" className="print:m-0">
+      <div ref={ref} id="invoice-preview" className="print:m-0 w-full">
         {template === "modern" && <ModernTemplate data={data} />}
         {template === "creative" && <CreativeTemplate data={data} />}
         {template === "restaurant" && <RestaurantTemplate data={data} />}

@@ -9,6 +9,7 @@ import {
 } from "@react-pdf/renderer";
 import type { InvoiceData } from "@/lib/invoice-types";
 import { calculateInvoice } from "@/lib/invoice-calculations";
+import { thermalPdfPageSize } from "@/lib/pdf-page-size";
 
 const styles = StyleSheet.create({
   page: {
@@ -187,7 +188,7 @@ export function RestaurantPDF({ data }: RestaurantPDFProps) {
 
   return (
     <Document>
-      <Page size={{ width: 226, height: 841 }} style={styles.page} wrap>
+      <Page size={thermalPdfPageSize} style={styles.page} wrap={false}>
         {/* Header */}
         <View style={styles.header}>
           <Text style={styles.title}>SALE INVOICE</Text>

@@ -19,6 +19,7 @@ import {
   parseCustomerBillMeta,
   splitCompanyAddressLines,
 } from "@/lib/customer-bill-format";
+import { thermalPdfPageSize } from "@/lib/pdf-page-size";
 
 const styles = StyleSheet.create({
   page: {
@@ -146,7 +147,7 @@ export function CustomerBillPDF({ data }: CustomerBillPDFProps) {
 
   return (
     <Document>
-      <Page size={{ width: 226, height: 841 }} style={styles.page} wrap>
+      <Page size={thermalPdfPageSize} style={styles.page} wrap={false}>
         <View style={styles.header}>
           <Text style={styles.businessName}>
             {(data.companyName || "FAJR FOODS").toUpperCase()}

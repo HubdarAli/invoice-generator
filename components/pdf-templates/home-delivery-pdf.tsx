@@ -16,6 +16,7 @@ import {
   parseDeliveryInfo,
   splitAddressLines,
 } from "@/lib/home-delivery-format";
+import { thermalPdfPageSize } from "@/lib/pdf-page-size";
 
 const styles = StyleSheet.create({
   page: {
@@ -178,7 +179,7 @@ export function HomeDeliveryPDF({ data }: HomeDeliveryPDFProps) {
 
   return (
     <Document>
-      <Page size={{ width: 226, height: 841 }} style={styles.page} wrap>
+      <Page size={thermalPdfPageSize} style={styles.page} wrap={false}>
         <View style={styles.thinBox}>
           <Text style={styles.textLine}>
             <Text style={styles.labelBold}>Client:</Text> {data.clientName || "-"}

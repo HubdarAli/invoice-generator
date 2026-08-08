@@ -11,6 +11,9 @@ export interface FormFieldDefinition {
 
 export interface TemplateFormSection {
   title: string;
+  description?: string;
+  variant?: "default" | "boxed";
+  layout?: "grid" | "stack";
   fields: Array<{
     key:
       | "companyLogo"
@@ -345,7 +348,10 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
     showLogo: false,
     sections: [
       {
-        title: "Client (Top Box)",
+        title: "Client Details",
+        description: "Bordered box at the top of the delivery slip",
+        variant: "boxed",
+        layout: "stack",
         fields: [
           {
             key: "clientName",

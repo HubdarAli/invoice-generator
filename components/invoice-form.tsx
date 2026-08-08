@@ -99,7 +99,10 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
     const id = field.key;
 
     return (
-      <div key={field.key} className={field.multiline ? "col-span-2" : undefined}>
+      <div
+        key={field.key}
+        className={field.multiline ? "sm:col-span-2" : undefined}
+      >
         <Label htmlFor={id}>{field.label}</Label>
         {field.multiline ? (
           <Textarea
@@ -128,21 +131,21 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {config.showLogo ? (
         <section>
-          <h2 className="text-lg font-semibold text-foreground mb-4">
+          <h2 className="text-base font-semibold text-foreground mb-3">
             Branding
           </h2>
           <div>
-            <Label>Company Logo</Label>
-            <div className="mt-2 flex items-center gap-4">
+            <Label className="text-sm">Company Logo</Label>
+            <div className="mt-2 flex items-center gap-3">
               {data.companyLogo ? (
-                <div className="relative">
+                <div className="relative shrink-0">
                   <img
                     src={data.companyLogo}
                     alt="Logo preview"
-                    className="h-16 w-16 object-contain rounded-lg border border-border"
+                    className="h-14 w-14 object-contain rounded-lg border border-border"
                   />
                   <button
                     type="button"
@@ -153,8 +156,8 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                   </button>
                 </div>
               ) : (
-                <label className="flex items-center justify-center h-16 w-16 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
-                  <Upload className="h-5 w-5 text-muted-foreground" />
+                <label className="flex shrink-0 items-center justify-center h-14 w-14 border-2 border-dashed border-border rounded-lg cursor-pointer hover:border-primary transition-colors">
+                  <Upload className="h-4 w-4 text-muted-foreground" />
                   <input
                     type="file"
                     accept="image/*"
@@ -163,7 +166,7 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                   />
                 </label>
               )}
-              <span className="text-sm text-muted-foreground">
+              <span className="text-xs text-muted-foreground leading-snug">
                 Upload your company logo (PNG, JPG)
               </span>
             </div>
@@ -171,16 +174,47 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
         </section>
       ) : null}
 
-      {config.sections.map((section) => (
-        <section key={section.title}>
-          <h2 className="text-lg font-semibold text-foreground mb-4">
-            {section.title}
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            {section.fields.map((field) => renderField(field))}
-          </div>
-        </section>
-      ))}
+      {config.sections.map((section) => {
+        const isBoxed = section.variant === "boxed";
+        const useStack = section.layout === "stack";
+
+        return (
+          <section
+            key={section.title}
+            className={
+              isBoxed
+                ? "rounded-lg border-2 border-foreground/15 bg-muted/25 p-4 sm:p-5"
+                : undefined
+            }
+          >
+            <div className={isBoxed ? "mb-4 pb-3 border-b border-border/80" : "mb-4"}>
+              <h2
+                className={
+                  isBoxed
+                    ? "text-base font-semibold text-foreground"
+                    : "text-lg font-semibold text-foreground"
+                }
+              >
+                {section.title}
+              </h2>
+              {section.description ? (
+                <p className="text-xs text-muted-foreground mt-1">
+                  {section.description}
+                </p>
+              ) : null}
+            </div>
+            <div
+              className={
+                useStack
+                  ? "space-y-4"
+                  : "grid grid-cols-1 sm:grid-cols-2 gap-4"
+              }
+            >
+              {section.fields.map((field) => renderField(field))}
+            </div>
+          </section>
+        );
+      })}
 
       <section>
         <h2 className="text-lg font-semibold text-foreground mb-4">
@@ -195,9 +229,9 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
           {data.items.map((item, index) => (
             <div
               key={item.id}
-              className="flex gap-3 items-start p-3 bg-muted/50 rounded-lg"
+              className="flex flex-col sm:flex-row gap-3 items-start p-3 bg-muted/50 rounded-lg"
             >
-              <div className="flex-1">
+              <div className="flex-1 w-full min-w-0">
                 <Label className="text-xs text-muted-foreground">
                   {config.items.descriptionLabel}
                 </Label>
@@ -211,51 +245,57 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                   className="mt-1 min-h-[60px]"
                 />
               </div>
-              <div className="w-20">
-                <Label className="text-xs text-muted-foreground">
-                  {config.items.quantityLabel}
-                </Label>
-                <Input
-                  type="number"
-                  min="1"
-                  value={item.quantity}
-                  onChange={(e) =>
-                    updateItem(index, "quantity", parseInt(e.target.value) || 1)
-                  }
-                  placeholder="1"
-                  className="mt-1"
-                />
+              <div className="flex w-full sm:w-auto gap-3 items-end">
+                <div className="flex-1 sm:w-20 sm:flex-none">
+                  <Label className="text-xs text-muted-foreground">
+                    {config.items.quantityLabel}
+                  </Label>
+                  <Input
+                    type="number"
+                    min="1"
+                    value={item.quantity}
+                    onChange={(e) =>
+                      updateItem(
+                        index,
+                        "quantity",
+                        parseInt(e.target.value) || 1
+                      )
+                    }
+                    placeholder="1"
+                    className="mt-1"
+                  />
+                </div>
+                <div className="flex-1 sm:w-28 sm:flex-none">
+                  <Label className="text-xs text-muted-foreground">
+                    {config.items.unitPriceLabel}
+                  </Label>
+                  <Input
+                    type="number"
+                    min="0"
+                    step="0.01"
+                    value={item.unitPrice}
+                    onChange={(e) =>
+                      updateItem(
+                        index,
+                        "unitPrice",
+                        parseFloat(e.target.value) || 0
+                      )
+                    }
+                    placeholder="0"
+                    className="mt-1"
+                  />
+                </div>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => removeItem(index)}
+                  disabled={data.items.length === 1}
+                  className="text-muted-foreground hover:text-destructive shrink-0"
+                >
+                  <Trash2 className="h-4 w-4" />
+                </Button>
               </div>
-              <div className="w-28">
-                <Label className="text-xs text-muted-foreground">
-                  {config.items.unitPriceLabel}
-                </Label>
-                <Input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={item.unitPrice}
-                  onChange={(e) =>
-                    updateItem(
-                      index,
-                      "unitPrice",
-                      parseFloat(e.target.value) || 0
-                    )
-                  }
-                  placeholder="0"
-                  className="mt-1"
-                />
-              </div>
-              <Button
-                type="button"
-                variant="ghost"
-                size="icon"
-                onClick={() => removeItem(index)}
-                disabled={data.items.length === 1}
-                className="text-muted-foreground hover:text-destructive mt-6"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
             </div>
           ))}
           <Button
@@ -275,8 +315,8 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
           <h2 className="text-lg font-semibold text-foreground mb-4">
             Financial Details
           </h2>
-          <div className="grid grid-cols-3 gap-4">
-            <div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="min-w-0">
               <Label htmlFor="taxRate">
                 {config.financials.taxLabel ?? "Tax Rate (%)"}
               </Label>
@@ -294,8 +334,25 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                 className="mt-1.5"
               />
             </div>
-            <div className="grid grid-cols-2 gap-2">
-              <div>
+            <div className="min-w-0">
+              <Label htmlFor="deliveryCharges">
+                {config.financials.deliveryChargesLabel ?? "Delivery Charges"}
+              </Label>
+              <Input
+                id="deliveryCharges"
+                type="number"
+                min="0"
+                step="0.01"
+                value={data.deliveryCharges}
+                onChange={(e) =>
+                  updateField("deliveryCharges", parseFloat(e.target.value) || 0)
+                }
+                placeholder="0"
+                className="mt-1.5"
+              />
+            </div>
+            <div className="sm:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="min-w-0">
                 <Label htmlFor="discountType">Discount Type</Label>
                 <Select
                   value={data.discountType}
@@ -303,7 +360,7 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                     updateField("discountType", value)
                   }
                 >
-                  <SelectTrigger id="discountType" className="mt-1.5">
+                  <SelectTrigger id="discountType" className="mt-1.5 w-full">
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
@@ -312,7 +369,7 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                   </SelectContent>
                 </Select>
               </div>
-              <div>
+              <div className="min-w-0">
                 <Label htmlFor="discountValue">
                   {config.financials.discountLabel ??
                     (data.discountType === "percentage"
@@ -332,23 +389,6 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
                   className="mt-1.5"
                 />
               </div>
-            </div>
-            <div>
-              <Label htmlFor="deliveryCharges">
-                {config.financials.deliveryChargesLabel ?? "Delivery Charges"}
-              </Label>
-              <Input
-                id="deliveryCharges"
-                type="number"
-                min="0"
-                step="0.01"
-                value={data.deliveryCharges}
-                onChange={(e) =>
-                  updateField("deliveryCharges", parseFloat(e.target.value) || 0)
-                }
-                placeholder="0"
-                className="mt-1.5"
-              />
             </div>
           </div>
         </section>

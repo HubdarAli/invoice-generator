@@ -56,7 +56,7 @@ export function PDFDownloadButton({ data, template }: PDFDownloadButtonProps) {
 
   if (!isClient || !PDFComponents) {
     return (
-      <Button disabled>
+      <Button disabled className="w-full sm:w-auto">
         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
         Loading...
       </Button>
@@ -83,12 +83,12 @@ export function PDFDownloadButton({ data, template }: PDFDownloadButtonProps) {
     <PDFDownloadLink document={PDFDocument} fileName={fileName}>
       {({ loading }) =>
         loading ? (
-          <Button disabled>
+          <Button disabled className="w-full sm:w-auto">
             <Loader2 className="h-4 w-4 mr-2 animate-spin" />
             Generating...
           </Button>
         ) : (
-          <Button>
+          <Button className="w-full sm:w-auto">
             <Download className="h-4 w-4 mr-2" />
             Download PDF
           </Button>
