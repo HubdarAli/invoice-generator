@@ -52,6 +52,12 @@ export type TemplateType =
   | "customer-bill";
 
 // Function to generate default data - should be called client-side only
+function toDatetimeLocalValue(date: Date = new Date()): string {
+  const pad = (value: number) => value.toString().padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
 export function createDefaultInvoiceData(): InvoiceData {
   return {
     companyName: "",
@@ -62,7 +68,7 @@ export function createDefaultInvoiceData(): InvoiceData {
     clientAddress: "",
     clientPhone: "",
     invoiceNumber: `INV-${Date.now().toString().slice(-6)}`,
-    invoiceDate: new Date().toISOString().split("T")[0],
+    invoiceDate: toDatetimeLocalValue(),
     items: [{ id: "1", description: "", quantity: 1, unitPrice: 0 }],
     taxRate: 0,
     discountType: "percentage",

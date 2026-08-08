@@ -6,7 +6,7 @@ export interface FormFieldDefinition {
   hint?: string;
   multiline?: boolean;
   rows?: number;
-  inputType?: "text" | "date" | "number";
+  inputType?: "text" | "date" | "datetime-local" | "number";
 }
 
 export interface TemplateFormSection {
@@ -104,9 +104,9 @@ const modernCreativeConfig: TemplateFormConfig = {
         },
         {
           key: "invoiceDate",
-          label: "Invoice Date",
+          label: "Invoice Date & Time",
           placeholder: "",
-          inputType: "date",
+          inputType: "datetime-local",
         },
       ],
     },
@@ -178,9 +178,9 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
           },
           {
             key: "invoiceDate",
-            label: "Order Date",
+            label: "Order Date & Time",
             placeholder: "",
-            inputType: "date",
+            inputType: "datetime-local",
           },
         ],
       },
@@ -233,9 +233,9 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
           },
           {
             key: "invoiceDate",
-            label: "Order Date",
+            label: "Order Date & Time",
             placeholder: "",
-            inputType: "date",
+            inputType: "datetime-local",
           },
           {
             key: "clientAddress",
@@ -318,9 +318,9 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
           },
           {
             key: "invoiceDate",
-            label: "Receipt Date",
+            label: "Receipt Date & Time",
             placeholder: "",
-            inputType: "date",
+            inputType: "datetime-local",
           },
         ],
       },
@@ -393,9 +393,9 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
           },
           {
             key: "invoiceDate",
-            label: "Order Date",
+            label: "Order Date & Time",
             placeholder: "",
-            inputType: "date",
+            inputType: "datetime-local",
           },
           {
             key: "companyAddress",
@@ -462,9 +462,9 @@ export const TEMPLATE_FORM_CONFIG: Record<TemplateType, TemplateFormConfig> = {
           },
           {
             key: "invoiceDate",
-            label: "Bill Date",
+            label: "Bill Date & Time",
             placeholder: "",
-            inputType: "date",
+            inputType: "datetime-local",
           },
           {
             key: "clientName",

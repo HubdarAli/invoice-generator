@@ -34,6 +34,23 @@ export function calculateInvoice(data: InvoiceData): InvoiceCalculations {
   };
 }
 
+export function toDatetimeLocalValue(date: Date = new Date()): string {
+  const pad = (value: number) => value.toString().padStart(2, "0");
+
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
+}
+
+export function parseInvoiceDate(dateString: string): Date | null {
+  if (!dateString) return null;
+
+  const date = new Date(dateString);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
+export function hasInvoiceTime(dateString: string): boolean {
+  return /T\d/.test(dateString);
+}
+
 export function formatCurrency(amount: number): string {
   return new Intl.NumberFormat("en-PK", {
     style: "currency",
@@ -42,7 +59,21 @@ export function formatCurrency(amount: number): string {
 }
 
 export function formatDate(dateString: string): string {
-  return new Date(dateString).toLocaleDateString("en-US", {
+  const date = parseInvoiceDate(dateString);
+  if (!date) return "-";
+
+  if (hasInvoiceTime(dateString)) {
+    return date.toLocaleString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
+  }
+
+  return date.toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
     day: "numeric",

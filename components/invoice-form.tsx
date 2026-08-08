@@ -93,15 +93,25 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
     hint?: string;
     multiline?: boolean;
     rows?: number;
-    inputType?: "text" | "date" | "number";
+    inputType?: "text" | "date" | "datetime-local" | "number";
   }) => {
     const value = data[field.key] as string;
     const id = field.key;
+    const inputType =
+      field.inputType === "datetime-local"
+        ? "datetime-local"
+        : field.inputType === "date"
+          ? "date"
+          : "text";
 
     return (
       <div
         key={field.key}
-        className={field.multiline ? "sm:col-span-2" : undefined}
+        className={
+          field.multiline || field.inputType === "datetime-local"
+            ? "sm:col-span-2"
+            : undefined
+        }
       >
         <Label htmlFor={id}>{field.label}</Label>
         {field.multiline ? (
@@ -116,7 +126,7 @@ export function InvoiceForm({ data, template, onChange }: InvoiceFormProps) {
         ) : (
           <Input
             id={id}
-            type={field.inputType === "date" ? "date" : "text"}
+            type={inputType}
             value={value}
             onChange={(e) => updateField(field.key, e.target.value)}
             placeholder={field.placeholder}
