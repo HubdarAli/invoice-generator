@@ -84,7 +84,7 @@ export function SaleReceiptTemplate({ data }: SaleReceiptTemplateProps) {
   return (
     <div
       className="bg-white w-[272px] mx-auto text-black print:shadow-none border border-black p-3 font-[Arial,Helvetica,sans-serif] text-[11px] leading-tight"
-      style={{ fontFamily: "Arial, Helvetica, sans-serif" }}
+      style={{ fontFamily: "Arial" }}
     >
       {/* Title */}
       <p className="text-center text-[15px] font-bold tracking-wide mb-2">

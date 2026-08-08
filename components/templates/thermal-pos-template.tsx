@@ -48,7 +48,7 @@ export function ThermalPosTemplate({ data }: ThermalPosTemplateProps) {
   return (
     <div
       className="bg-white w-[260px] mx-auto text-black print:shadow-none px-3 py-4 uppercase font-mono text-[11px] leading-[1.35] tracking-tight"
-      style={{ fontFamily: "Courier New, Courier, monospace" }}
+      style={{ fontFamily: "Geist Mono" }}
     >
       {/* Header */}
       <div className="text-left space-y-0">
