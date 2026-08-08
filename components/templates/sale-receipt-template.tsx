@@ -88,7 +88,7 @@ export function SaleReceiptTemplate({ data }: SaleReceiptTemplateProps) {
     >
       {/* Title */}
       <p className="text-center text-[15px] font-bold tracking-wide mb-2">
-        SALE RECEIPT
+        SALE INVOICE
       </p>
 
       {/* Order number box */}

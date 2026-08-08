@@ -63,7 +63,7 @@ export function CustomerBillTemplate({ data }: CustomerBillTemplateProps) {
           className="m-0 font-bold uppercase"
           style={{ fontSize: "19px", lineHeight: 1.05 }}
         >
-          {data.companyName || "FAJR FOODS"}
+          {data.companyName || "AL FAJR FOODS"}
         </p>
         <p
           className="m-0 font-bold uppercase"
