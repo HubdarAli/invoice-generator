@@ -72,9 +72,10 @@ const styles = StyleSheet.create({
     textAlign: "right",
     textTransform: "uppercase",
   },
-  timeText: {
+  dateTimeRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     fontSize: 9,
-    textAlign: "right",
     marginBottom: 4,
   },
   metaRow: {
@@ -154,6 +155,14 @@ const styles = StyleSheet.create({
   },
 });
 
+function formatReceiptDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
 function formatReceiptTime(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleTimeString("en-US", {
@@ -223,10 +232,10 @@ export function SaleReceiptPDF({ data }: SaleReceiptPDFProps) {
 
           <View style={styles.invoiceRow}>
             <Text>Invoice # {data.invoiceNumber || "00000"}</Text>
-            <Text>
+            {/* <Text>
               DAY{" "}
               {data.invoiceDate ? getDayOfYear(data.invoiceDate) : "00000"}
-            </Text>
+            </Text> */}
           </View>
 
           <Text style={styles.restaurantRow}>
@@ -237,9 +246,14 @@ export function SaleReceiptPDF({ data }: SaleReceiptPDFProps) {
           </Text>
 
           <Text style={styles.serviceType}>{serviceType}</Text>
-          <Text style={styles.timeText}>
-            {data.invoiceDate ? formatReceiptTime(data.invoiceDate) : "-"}
-          </Text>
+          <View style={styles.dateTimeRow}>
+            <Text>
+              {data.invoiceDate ? formatReceiptDate(data.invoiceDate) : "-"}
+            </Text>
+            <Text>
+              {data.invoiceDate ? formatReceiptTime(data.invoiceDate) : "-"}
+            </Text>
+          </View>
 
           <View style={styles.metaRow}>
             <Text style={styles.metaLabel}>Server :</Text>

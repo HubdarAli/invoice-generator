@@ -7,6 +7,14 @@ interface SaleReceiptTemplateProps {
   data: InvoiceData;
 }
 
+function formatReceiptDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = date.getDate();
+  const month = date.toLocaleString("en-US", { month: "short" });
+  const year = String(date.getFullYear()).slice(-2);
+  return `${day}-${month}-${year}`;
+}
+
 function formatReceiptTime(dateString: string): string {
   const date = new Date(dateString);
   return date.toLocaleTimeString("en-US", {
@@ -103,10 +111,10 @@ export function SaleReceiptTemplate({ data }: SaleReceiptTemplateProps) {
       {/* Invoice / Day */}
       <div className="flex justify-between items-baseline mb-1.5 text-[11px]">
         <span>Invoice # {data.invoiceNumber || "00000"}</span>
-        <span>
+        {/* <span>
           DAY{" "}
           {data.invoiceDate ? getDayOfYear(data.invoiceDate) : "00000"}
-        </span>
+        </span> */}
       </div>
 
       {/* Restaurant */}
@@ -124,16 +132,7 @@ export function SaleReceiptTemplate({ data }: SaleReceiptTemplateProps) {
       
       <div className="flex justify-between mb-1 leading-snug">
         <span>
-          {data.invoiceDate
-            ? (() => {
-                const date = new Date(data.invoiceDate);
-                const day = date.getDate();
-                const month = date.toLocaleString("en-US", { month: "short" });
-                const year = String(date.getFullYear()).slice(-2);
-                return `${day}-${month}-${year}`;
-              })()
-            : "-"}
-       
+          {data.invoiceDate ? formatReceiptDate(data.invoiceDate) : "-"}
         </span>
         <span>
           {data.invoiceDate ? formatReceiptTime(data.invoiceDate) : "-"}
